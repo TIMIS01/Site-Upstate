@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UPSTATE — Умная CRM-экосистема для фитнес-тренеров нового поколения</title>
+<meta name="description" content="UPSTATE — B2B SaaS-инфраструктура для независимых фитнес-тренеров. Автоматизируем рутину на 70%, увеличиваем удержание клиентов на 28%. Управляй 35+ подопечными без выгорания.">
+<meta name="keywords" content="UPSTATE, CRM для тренера, онлайн тренинг, управление клиентами фитнес, AI тренер, SaaS фитнес, retention тренер, автоматизация тренинга">
+<meta name="robots" content="index, follow">
+<meta name="author" content="UPSTATE">
+<link rel="canonical" href="https://upstate.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://upstate.app/">
+<meta property="og:title" content="UPSTATE — Умная CRM-экосистема для фитнес-тренеров">
+<meta property="og:description" content="Хватит следить за прогрессом. Начни им управлять. Автоматизируй рутину, увеличь retention на 28%, масштабируйся до 35+ клиентов.">
+<meta property="og:image" content="https://upstate.app/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ─── SYSTEM CORE VARIABLES ────────────────────────────── */
+:root {
+  --bg: #020408;
+  --bg-card: rgba(6, 11, 23, 0.45);
+  --border: rgba(255, 255, 255, 0.05);
+  --or: #FF4D00;
+  --or-rgb: 255, 77, 0;
+  --tl: #00D8CC;
+  --tl-rgb: 0, 216, 204;
+  --txt: #FFFFFF;
+  --txt2: #8F9CAE;
+  --font-head: 'Space Grotesk', -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+}
+
+/* ─── RESET & DEFAULTS ──────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+body {
+  background-color: var(--bg);
+  color: var(--txt);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+input, button, select { font-family: inherit; }
+
+/* Utility Classes */
+.cnt { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.sec { position: relative; padding: 140px 0; }
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 16px;
+}
+.sh {
+  font-family: var(--font-head);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.ss {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--txt2);
+  line-height: 1.6;
+  max-width: 720px;
+}
+.or { color: var(--or); }
+.tl { color: var(--tl); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--or); }
+
+/* Scroll Reveal */
+.rv { opacity: 0; transform: translateY(30px); transition: opacity 0.85s cubic-bezier(0.2, 1, 0.2, 1), transform 0.85s cubic-bezier(0.2, 1, 0.2, 1); }
+.rv.vis { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.15s; }
+.d2 { transition-delay: 0.3s; }
+.d3 { transition-delay: 0.45s; }
+
+/* Hardware Cursor */
+#CUR { width: 6px; height: 6px; background: #fff; position: fixed; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
+#CUR-R { width: 34px; height: 34px; border: 1px solid rgba(255, 77, 0, 0.4); position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); will-change: left, top; }
+@media (max-width: 1024px) { #CUR, #CUR-R { display: none !important; } }
+
+/* Nav Layer */
+#NAV {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 80px;
+  background: rgba(2, 4, 8, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+}
+.n-cnt { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.n-logo { font-family: var(--font-head); font-size: 24px; font-weight: 800; letter-spacing: -0.04em; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.n-logo span { width: 10px; height: 10px; background: var(--or); border-radius: 50%; display: inline-block; }
+.n-links { display: flex; gap: 32px; align-items: center; }
+.n-links a { font-size: 14px; font-weight: 500; color: var(--txt2); text-decoration: none; transition: color 0.25s; }
+.n-links a:hover, .n-links a.act { color: #fff; }
+.n-cta { background: #fff; color: #000; padding: 10px 20px; border-radius: 100px; font-size: 13.5px; font-weight: 600; text-decoration: none; transition: transform 0.2s, background 0.2s; white-space: nowrap; }
+.n-cta:hover { background: var(--or); color: #fff; transform: translateY(-1px); }
+
+@media (max-width: 768px) {
+  #NAV { height: 64px; }
+  .n-logo { font-size: 18px; }
+  .n-links { gap: 16px; }
+  .n-links a { font-size: 12px; }
+  .n-cta { font-size: 11px; padding: 8px 14px; }
+}
+@media (max-width: 480px) {
+  .n-links { gap: 10px; }
+  .n-links a { font-size: 11px; }
+  .n-cta { font-size: 10px; padding: 7px 12px; }
+}
+
+/* Hero Layer */
+#HERO {
+  padding-top: 180px;
+  padding-bottom: 100px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(circle at 80% 20%, rgba(255, 77, 0, 0.05), transparent 50%), radial-gradient(circle at 15% 80%, rgba(0, 216, 204, 0.04), transparent 50%);
+}
+.h-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+.h-main-title { font-family: var(--font-head); font-size: clamp(40px, 6vw, 68px); font-weight: 800; line-height: 1.02; letter-spacing: -0.04em; margin-bottom: 28px; }
+.h-main-title span { background: linear-gradient(135deg, #fff 30%, var(--txt2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.h-btn-group { display: flex; gap: 16px; margin-top: 40px; align-items: center; flex-wrap: wrap; }
+.btn-p { background: var(--or); color: #fff; padding: 18px 36px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; box-shadow: 0 12px 30px rgba(255, 77, 0, 0.2); transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1); white-space: nowrap; }
+.btn-p:hover { background: #ff5c14; transform: translateY(-2px); box-shadow: 0 16px 36px rgba(255, 77, 0, 0.35); }
+.btn-s { background: rgba(255,255,255,0.03); color: #fff; padding: 18px 36px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--border); transition: all 0.25s; white-space: nowrap; }
+.btn-s:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+.h-fomo { 
+  font-size: 13px; 
+  color: var(--txt2); 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  margin-top: 18px;
+  margin-left: 0;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 10px 18px;
+  width: fit-content;
+  white-space: nowrap;
+}
+.h-fomo .live-dot { 
+  width: 8px; 
+  height: 8px; 
+  background: var(--tl); 
+  border-radius: 50%; 
+  display: inline-block; 
+  box-shadow: 0 0 12px var(--tl), 0 0 24px rgba(0,216,204,0.4); 
+  animation: pulse 2s infinite; 
+  flex-shrink: 0;
+}
+.h-fomo .spots-num {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.cvs-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.h-vis-frame { position: relative; width: 100%; height: 520px; background: rgba(6,11,23,0.3); border: 1px solid var(--border); border-radius: 32px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.h-vis-glow { position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,77,0,0.15), transparent 70%); filter: blur(30px); top: 20%; left: 30%; }
+.h-core-widget { position: relative; z-index: 2; width: 85%; border-radius: 20px; background: #040810; border: 1px solid rgba(255,255,255,0.08); padding: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+.w-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.w-title { font-family: var(--font-head); font-size: 15px; font-weight: 600; }
+.w-metric { font-family: var(--font-head); font-size: 32px; font-weight: 700; color: var(--tl); }
+
+@keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+@media (max-width: 968px) {
+  .h-grid { grid-template-columns: 1fr; gap: 48px; }
+  #HERO { padding-top: 120px; padding-bottom: 60px; }
+  .h-vis-frame { height: 360px; }
+  .btn-p, .btn-s { padding: 14px 24px; font-size: 14px; }
+}
+@media (max-width: 480px) {
+  #HERO { padding-top: 100px; }
+  .h-main-title { font-size: 32px; }
+  .h-vis-frame { height: 280px; }
+  .h-core-widget { padding: 16px; }
+  .w-metric { font-size: 24px; }
+  .w-title { font-size: 13px; }
+  .btn-p, .btn-s { padding: 12px 20px; font-size: 13px; width: 100%; text-align: center; }
+  .h-btn-group { flex-direction: column; width: 100%; }
+  .h-fomo { white-space: normal; font-size: 12px; }
+}
+
+/* Strip Layer */
+#METRICS { background: #040811; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 50px 0; position: relative; z-index: 10; }
+.m-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.m-num { font-family: var(--font-head); font-size: clamp(36px, 4vw, 52px); font-weight: 700; line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; }
+.m-lbl { font-size: 13.5px; color: var(--txt2); line-height: 1.4; font-weight: 500; }
+@media (max-width: 768px) { .m-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+@media (max-width: 480px) { .m-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+/* ─── INTRO VIDEO OVERLAY ────────────────────────── */
+#INTRO {
+  position: fixed; inset: 0; background: #000;
+  z-index: 100000; display: flex; align-items: center;
+  justify-content: center; flex-direction: column; gap: 28px;
+}
+#INTRO-BG {
+  position: absolute; inset: 0; background: #000;
+  transition: opacity 0.9s ease; z-index: 0;
+}
+#INTRO.intro-exit #INTRO-BG { opacity: 0; }
+#INTRO-WRAP {
+  position: relative; z-index: 1;
+  width: min(380px, 75vw);
+  aspect-ratio: 1 / 1;
+  display: flex; align-items: center; justify-content: center;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+#INTRO-VIDEO { width: 100%; height: 100%; object-fit: contain; display: block; }
+#INTRO-SKIP {
+  position: relative; z-index: 1;
+  font-family: var(--font-body); font-size: 12px;
+  color: rgba(255,255,255,0.3); background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 7px 18px; border-radius: 100px; cursor: pointer;
+  transition: color 0.2s, border-color 0.2s; letter-spacing: 0.05em;
+}
+#INTRO-SKIP:hover { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.3); }
+
+/* ─── S3 — PAIN BELT (INFINITE CONVEYOR) ═══════════ */
+#S3 {
+  padding: 120px 0 100px;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 77, 0, 0.02), transparent 70%);
+}
+.p-head { padding: 0 52px; margin-bottom: 60px; transition: filter 0.6s ease, opacity 0.6s ease; }
+.stage-blurred .p-head { filter: blur(10px); opacity: 0.2; }
+
+.belt-outer {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 0 36px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+.belt-track { 
+  display: flex; 
+  gap: 24px; 
+  width: max-content; 
+  will-change: transform; 
+  transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1); 
+}
+
+.pc {
+  width: 520px;
+  height: 600px;
+  flex-shrink: 0;
+  border-radius: 28px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  opacity: 0.35;
+  filter: blur(1px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter, width;
+  transition: 
+    transform 0.75s cubic-bezier(0.2, 1, 0.2, 1), 
+    opacity 0.6s ease, 
+    filter 0.6s ease, 
+    border-color 0.4s, 
+    background 0.5s, 
+    box-shadow 0.5s, 
+    width 0.75s cubic-bezier(0.2, 1, 0.2, 1);
+  pointer-events: none;
+  position: relative;
+}
+
+.pc.act {
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  background: rgba(6, 11, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+
+.pc.act.hovered {
+  z-index: 999;
+  width: 1100px;
+  background: rgba(3, 7, 14, 0.98);
+  border-color: rgba(255, 77, 0, 0.35);
+  box-shadow: 0 60px 140px rgba(0, 0, 0, 0.85), 0 0 80px rgba(255, 77, 0, 0.1);
+}
+
+.stage-blurred .pc { opacity: 0.06 !important; filter: blur(8px) !important; }
+.stage-blurred .pc.act.hovered { opacity: 1 !important; filter: blur(0) !important; }
+
+.pc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; transition: opacity 0.3s; }
+.pc.act.hovered .pc-meta { opacity: 0.3; }
+.pc-no { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.2em; color: var(--txt2); text-transform: uppercase; font-weight: 700; }
+.pc.act .pc-no { color: var(--or); }
+.pc-tag { font-size: 11px; padding: 4px 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; color: var(--txt); font-weight: 600; }
+.pc.act .pc-tag { border-color: rgba(0, 216, 204, 0.25); color: var(--tl); }
+
+.pc-question {
+  font-family: var(--font-head);
+  font-size: clamp(15px, 1.8vw, 20px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--or);
+  text-align: center;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(-15px);
+  transition: opacity 0.5s cubic-bezier(0.2,1,0.2,1), transform 0.5s cubic-bezier(0.2,1,0.2,1);
+  margin-bottom: 16px; min-height: 48px;
+}
+.pc.act.hovered .pc-question { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+
+.pc-screen-container { position: relative; flex-grow: 1; width: 100%; display: flex; align-items: center; justify-content: center; }
+.pc-deck { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+
+.deck-screen {
+  position: absolute;
+  width: 175px; height: 290px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #060b17;
+  will-change: transform, left;
+  transition: transform 0.75s cubic-bezier(0.2,1,0.2,1),
+              left 0.75s cubic-bezier(0.2,1,0.2,1),
+              opacity 0.75s cubic-bezier(0.2,1,0.2,1),
+              border-color 0.4s;
+}
+.pc.act .deck-screen[data-layer="0"] { transform: translate3d(0,0,20px);  z-index:10; opacity:1; }
+.pc.act .deck-screen[data-layer="1"] { transform: translate3d(10px,8px,10px); z-index:9; opacity:0.85; }
+.pc.act .deck-screen[data-layer="2"] { transform: translate3d(20px,16px,0); z-index:8; opacity:0.65; }
+.pc.act .deck-screen[data-layer="3"] { transform: translate3d(30px,24px,-10px); z-index:7; opacity:0.45; }
+
+.pc.act.hovered .deck-screen { transform: translate3d(0,0,0) !important; opacity:1 !important; z-index:15; width:190px; height:315px; }
+.pc.act.hovered .deck-screen:hover { transform: scale(1.04) !important; border-color: var(--tl); z-index:20; }
+
+.pc-answer {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.4vw, 15px);
+  font-weight: 500; line-height: 1.5; color: var(--txt2);
+  text-align: center; width: 100%; max-width: 820px;
+  margin: 20px auto 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(15px);
+  transition: opacity 0.5s cubic-bezier(0.2,1,0.2,1), transform 0.5s cubic-bezier(0.2,1,0.2,1);
+}
+.pc.act.hovered .pc-answer { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+
+.belt-dots { display: flex; justify-content: center; gap: 8px; margin-top: 32px; transition: filter 0.5s, opacity 0.5s; }
+.stage-blurred .belt-dots { filter: blur(8px); opacity: 0.15; }
+.bdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; cursor: pointer; transition: all 0.4s; }
+.bdot.on { width: 24px; border-radius: 4px; background: var(--or); }
+
+@media(max-width: 1200px) { 
+  .pc.act.hovered { width: 95vw; } 
+  .pc.act.hovered .deck-screen { width:150px; height:250px; } 
+}
+@media(max-width: 768px) {
+  #S3 { padding: 80px 0 60px; }
+  .p-head { padding: 0 24px; }
+  .pc { width: 85vw; height: 520px; padding: 20px; }
+  .pc.act.hovered { height: auto; min-height: 540px; width: 92vw; }
+  .pc.act.hovered .pc-deck { flex-direction: column; gap: 16px; padding: 16px 0; }
+  .pc.act.hovered .deck-screen { position: relative !important; left: auto !important; width: 100% !important; max-width: 240px; height: 360px; }
+  .pc-question { font-size: 16px; }
+  .pc-answer { font-size: 13px; }
+}
+
+/* Bento Grid */
+#BENTO { background: #040811; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.b-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 360px 360px;
+  gap: 24px;
+  margin-top: 56px;
+}
+.mc-m1 { grid-column: 1; grid-row: 1 / span 2; }
+.mc-m2 { grid-column: 2 / span 2; grid-row: 1; }
+.mc-m3 { grid-column: 2; grid-row: 2; }
+.mc-m4 { grid-column: 3; grid-row: 2; }
+
+.mc {
+  position: relative;
+  background: rgba(6, 11, 23, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(20px);
+  transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
+}
+.mc:hover { border-color: rgba(255,255,255,0.14); background: rgba(6,11,23,0.95); box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+.mc h3 { font-family: var(--font-head); font-size: 20px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.01em; }
+.mc p { font-size: 13px; color: var(--txt2); line-height: 1.6; max-width: 320px; }
+.mc-m2 p { max-width: 460px; }
+.mc-m2 .mc-info { padding-bottom: 180px; }
+.mc-visual { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.mc-info { position: relative; z-index: 2; }
+
+.orb { position: absolute; width: 180px; height: 180px; border-radius: 50%; filter: blur(40px); transition: transform 0.6s ease; }
+.orb-tl { background: radial-gradient(circle, rgba(0,216,204,0.18), transparent 70%); right: -20px; bottom: -20px; }
+.orb-or { background: radial-gradient(circle, rgba(255,77,0,0.14), transparent 70%); right: -10px; bottom: -10px; }
+.orb-both { background: radial-gradient(circle, rgba(255,77,0,0.1), transparent 50%), radial-gradient(circle at 70% 70%, rgba(0,216,204,0.1), transparent 50%); left: 50%; bottom: -30px; transform: translateX(-50%); width: 260px; height: 200px; }
+.mc:hover .orb { transform: scale(1.15); }
+
+.client-feed { position: relative; display: flex; flex-direction: column; gap: 8px; z-index: 2; margin-top: auto; }
+.c-row { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 9px 12px; font-size: 12px; color: var(--txt); font-family: var(--font-body); transition: background 0.3s; }
+.mc:hover .c-row:nth-child(1) { background: rgba(0,216,204,0.06); border-color: rgba(0,216,204,0.2); }
+.c-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.c-dot-g { background: #00d8a0; box-shadow: 0 0 6px rgba(0,216,204,0.7); }
+.c-dot-o { background: var(--or); box-shadow: 0 0 6px rgba(255,77,0,0.7); }
+.c-dot-r { background: #ff4455; box-shadow: 0 0 6px rgba(255,68,85,0.7); }
+.c-name { flex: 1; font-weight: 600; color: #fff; }
+.c-status { font-size: 11px; color: var(--txt2); }
+.focus-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,216,204,0.08); border: 1px solid rgba(0,216,204,0.18); border-radius: 8px; padding: 6px 12px; font-size: 12px; color: var(--tl); font-weight: 600; margin-top: 8px; font-family: var(--font-head); width: fit-content; }
+
+.trigger-stack { 
+  position: absolute; 
+  bottom: 28px; 
+  right: 28px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0; 
+  z-index: 2; 
+  width: 260px; 
+  max-width: calc(100% - 56px);
+}
+.t-card {
+  background: rgba(6,11,23,0.92);
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  transition: transform 0.4s cubic-bezier(0.2,1,0.2,1), box-shadow 0.4s;
+}
+.t-card:nth-child(1) { z-index: 10; position: relative; border-color: rgba(255,68,85,0.35); box-shadow: 0 8px 24px rgba(255,68,85,0.15); }
+.t-card:nth-child(2) { z-index: 9; position: relative; margin-top: -4px; border-color: rgba(255,180,0,0.25); transform: scale(0.97) translateY(4px); }
+.t-card:nth-child(3) { z-index: 8; position: relative; margin-top: -4px; border-color: rgba(0,216,204,0.2); transform: scale(0.94) translateY(8px); }
+.mc:hover .t-card:nth-child(2) { transform: scale(1) translateY(8px); }
+.mc:hover .t-card:nth-child(3) { transform: scale(1) translateY(16px); }
+.t-flag { font-size: 11px; font-weight: 700; font-family: var(--font-head); letter-spacing: 0.05em; margin-bottom: 3px; }
+.t-flag-r { color: #ff4455; }
+.t-flag-y { color: #ffb400; }
+.t-flag-g { color: #00d8a0; }
+.t-desc { font-size: 11px; color: #a1a1aa; line-height: 1.4; }
+.t-btn { display: inline-block; margin-top: 5px; font-size: 10px; font-weight: 700; font-family: var(--font-head); color: #00d8a0; border: 1px solid rgba(0,216,204,0.35); border-radius: 4px; padding: 2px 7px; }
+
+.ai-btn-float { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #ff4d00, #ff7a33); color: #fff; font-family: var(--font-head); font-size: 13px; font-weight: 700; padding: 11px 22px; border-radius: 10px; white-space: nowrap; box-shadow: 0 8px 28px rgba(255,77,0,0.4), 0 0 0 1px rgba(255,77,0,0.3); z-index: 2; transition: box-shadow 0.4s, transform 0.4s; }
+.mc:hover .ai-btn-float { box-shadow: 0 12px 36px rgba(255,77,0,0.55), 0 0 0 1px rgba(255,77,0,0.5); transform: translateX(-50%) translateY(-2px); }
+.layer-icons { position: absolute; bottom: 82px; left: 50%; transform: translateX(-50%); display: flex; gap: -8px; z-index: 2; }
+.l-icon { width: 44px; height: 56px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); margin-left: -8px; transition: transform 0.4s; }
+.l-icon:nth-child(1) { background: rgba(255,77,0,0.12); border-color: rgba(255,77,0,0.2); transform: rotate(-8deg); }
+.l-icon:nth-child(2) { background: rgba(0,216,204,0.08); border-color: rgba(0,216,204,0.15); transform: rotate(-2deg); z-index: 2; }
+.l-icon:nth-child(3) { background: rgba(255,255,255,0.04); transform: rotate(5deg); }
+.mc:hover .l-icon:nth-child(1) { transform: rotate(-14deg) translateX(-4px); }
+.mc:hover .l-icon:nth-child(3) { transform: rotate(10deg) translateX(4px); }
+
+.push-stack { position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; flex-direction: column; gap: 7px; z-index: 2; }
+.push-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 9px 12px; font-size: 11px; font-family: var(--font-body); color: var(--txt2); display: flex; align-items: flex-start; gap: 8px; transition: background 0.3s, border-color 0.3s; }
+.push-card:first-child { border-color: rgba(255,77,0,0.2); background: rgba(255,77,0,0.05); }
+.mc:hover .push-card:first-child { background: rgba(255,77,0,0.08); }
+.push-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.push-text b { display: block; color: #fff; font-size: 11px; margin-bottom: 2px; }
+
+@media(max-width: 968px) {
+  .b-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .mc-m1, .mc-m2, .mc-m3, .mc-m4 { grid-column: 1; grid-row: auto; min-height: 340px; }
+  .mc-m2 .mc-info { padding-bottom: 200px; }
+  .trigger-stack { width: 220px; right: 20px; bottom: 20px; }
+}
+@media(max-width: 768px) {
+  .mc-m2 .mc-info { padding-bottom: 220px; }
+  .trigger-stack { width: 200px; right: 16px; bottom: 16px; }
+  .mc-m2 p { max-width: 100%; }
+}
+@media(max-width: 480px) {
+  .b-grid { gap: 16px; }
+  .mc { padding: 20px; border-radius: 16px; }
+  .mc-m2 .mc-info { padding-bottom: 240px; }
+  .trigger-stack { 
+    width: calc(100% - 32px); 
+    right: 16px; 
+    left: 16px; 
+    bottom: 16px; 
+  }
+  .t-card { padding: 8px 10px; }
+  .t-desc { font-size: 10px; }
+  .push-stack { left: 16px; right: 16px; bottom: 16px; }
+}
+
+/* Calculator */
+#CALC { background: radial-gradient(circle at 10% 90%, rgba(0, 216, 204, 0.02), transparent 50%); }
+.c-box { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; background: rgba(255,255,255,0.01); border: 1px solid var(--border); border-radius: 32px; padding: 56px; margin-top: 64px; backdrop-filter: blur(10px); }
+.c-inputs { display: flex; flex-direction: column; gap: 36px; }
+.r-group { display: flex; flex-direction: column; gap: 12px; }
+.r-meta { display: flex; justify-content: space-between; align-items: center; }
+.r-meta label { font-size: 15px; font-weight: 600; color: #fff; }
+.r-val { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--or); background: rgba(255,77,0,0.06); padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(255,77,0,0.15); }
+.r-val-tl { color: var(--tl); background: rgba(0,216,204,0.06); border-color: rgba(0,216,204,0.15); }
+.slider { -webkit-appearance: none; width: 100%; height: 5px; background: rgba(255,255,255,0.08); border-radius: 100px; outline: none; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 4px solid var(--or); cursor: pointer; transition: transform 0.15s; }
+.slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.slider-tl::-webkit-slider-thumb { border-color: var(--tl); }
+.c-outputs { display: flex; flex-direction: column; justify-content: space-between; background: #040810; border: 1px solid rgba(255,255,255,0.04); border-radius: 20px; padding: 40px; position: relative; overflow: hidden; }
+.o-glow { position: absolute; width: 250px; height: 250px; background: radial-gradient(circle, rgba(0,216,204,0.06), transparent 70%); right: -50px; top: -50px; pointer-events: none; }
+.o-primary { margin-bottom: 32px; }
+.o-lbl { font-size: 13px; color: var(--txt2); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 8px; }
+.o-num-huge { font-family: var(--font-head); font-size: clamp(40px, 4vw, 56px); font-weight: 800; color: #fff; line-height: 1; }
+.ct-rub { font-size: 24px; font-weight: 500; color: var(--txt2); margin-left: 4px; }
+.o-sub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; }
+.o-sub-num { font-family: var(--font-head); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+@media (max-width: 968px) { 
+  .c-box { grid-template-columns: 1fr; padding: 24px; gap: 40px; } 
+  .c-outputs { padding: 28px; } 
+  .o-sub-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 480px) {
+  .c-box { border-radius: 20px; padding: 20px; gap: 32px; }
+  .o-sub-grid { grid-template-columns: 1fr; gap: 16px; }
+  .r-meta label { font-size: 13px; }
+  .r-val { font-size: 16px; }
+}
+
+/* CTA */
+#CTA { padding: 160px 0; background: #040811; border-top: 1px solid var(--border); text-align: center; overflow: hidden; }
+.cta-box { position: relative; z-index: 5; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+#CTA .sh { font-size: clamp(36px, 6vw, 62px); margin-bottom: 24px; letter-spacing: -0.04em; line-height: 1.05; }
+#CTA p { font-size: 19px; max-width: 600px; margin: 0 auto 40px auto; }
+@media (max-width: 768px) {
+  #CTA { padding: 100px 0; }
+  #CTA p { font-size: 16px; }
+}
+
+/* Footer */
+footer { background: #020408; border-top: 1px solid var(--border); padding: 80px 0 40px 0; font-size: 14px; color: var(--txt2); }
+.f-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 60px; }
+.f-brand h4 { font-family: var(--font-head); font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.03em; }
+.f-brand p { line-height: 1.6; max-width: 240px; }
+.f-group { display: flex; flex-direction: column; gap: 12px; }
+.f-group-h { font-family: var(--font-head); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; margin-bottom: 8px; }
+.f-group a { color: var(--txt2); text-decoration: none; transition: color 0.2s; }
+.f-group a:hover { color: #fff; }
+.f-bottom { border-top: 1px solid rgba(255,255,255,0.04); padding-top: 32px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+@media (max-width: 768px) { 
+  .f-grid { grid-template-columns: 1fr; gap: 36px; } 
+  .f-bottom { flex-direction: column; gap: 16px; text-align: center; } 
+  footer { padding: 60px 0 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── INTRO VIDEO OVERLAY ─────────────────────── -->
+<div id="INTRO" style="display:none;">
+  <div id="INTRO-BG"></div>
+  <div id="INTRO-WRAP">
+    <video id="INTRO-VIDEO" playsinline muted preload="auto">
+      <source src="./logo-intro.mp4" type="video/mp4">
+    </video>
+  </div>
+  <button id="INTRO-SKIP">Пропустить →</button>
+</div>
+
+<div id="CUR"></div>
+<div id="CUR-R"></div>
+
+<nav id="NAV">
+  <div class="n-cnt cnt">
+    <a href="#" class="n-logo" id="NAV-LOGO">
+      <img src="./logo.jpg" id="NAV-LOGO-IMG" alt="UPSTATE"
+           style="height:34px;width:auto;border-radius:6px;display:none;"
+           onload="this.style.display='block'; document.getElementById('NAV-LOGO-TEXT').style.display='none';"
+           onerror="this.style.display='none';">
+      <span id="NAV-LOGO-TEXT">UPSTATE<span></span></span>
+    </a>
+    <div class="n-links">
+      <a href="#S3" class="act">Решения</a>
+      <a href="#BENTO">Возможности</a>
+      <a href="#CALC">Расчет ROI</a>
+    </div>
+    <a href="https://t.me/Upstate_Ecosystem" target="_blank" class="n-cta">Ранний доступ</a>
+  </div>
+</nav>
+
+<section id="HERO" class="sec">
+  <canvas id="NET-CVS" class="cvs-layer"></canvas>
+  <div class="cnt">
+    <div class="h-grid">
+      <div class="h-info">
+        <div class="eyebrow rv">B2B SaaS ИНФРАСТРУКТУРА</div>
+        <h1 class="h-main-title rv d1">
+          Хватит следить за прогрессом.<br><span>Начни им управлять.</span>
+        </h1>
+        <p class="ss rv d2">
+          Единая интеллектуальная экосистема для фитнес-экспертов и премиальных тренеров. Автоматизируйте рутинное венение КБЖУ, тренировок и аналитики комплаенса. Масштабируйте бизнес до 35+ подопечных без хаоса в мессенджерах.
+        </p>
+        <div class="h-btn-group rv d3">
+          <a href="https://t.me/Upstate_Ecosystem" target="_blank" class="btn-p">Запросить демо-доступ</a>
+          <a href="#S3" class="btn-s">Изучить модули</a>
+        </div>
+        <div class="h-fomo rv d3">
+          <span class="live-dot"></span> 
+          Осталось <span class="spots-num" id="SPOTS">139</span> инвайтов на бету
+        </div>
+      </div>
+      <div class="h-vis rv d2">
+        <div class="h-vis-frame">
+          <div class="h-vis-glow"></div>
+          <div class="h-core-widget">
+            <div class="w-row">
+              <div class="w-title">Средний Compliance (выполнение планов)</div>
+              <div class="w-metric">94.2%</div>
+            </div>
+            <div class="w-row" style="border:none; margin:0; padding:0;">
+              <div class="w-title">Экономия времени тренера / в неделю</div>
+              <div class="w-metric" style="color:var(--or);">14.5ч</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="METRICS">
+  <div class="cnt">
+    <div class="m-grid">
+      <div class="m-item rv">
+        <div class="m-num or">70%</div>
+        <div class="m-lbl">Рутинных задач администрирования автоматизировано</div>
+      </div>
+      <div class="m-item rv d1">
+        <div class="m-num tl">+28%</div>
+        <div class="m-lbl">Средний прирост LTV и удержания подопечных</div>
+      </div>
+      <div class="m-item rv d2">
+        <div class="m-num">35+</div>
+        <div class="m-lbl">Клиентов на ведении без риска выгорания эксперта</div>
+      </div>
+      <div class="m-item rv d3">
+        <div class="m-num tl">3 мин</div>
+        <div class="m-lbl">На проектирование индивидуальной программы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="S3" class="sec">
+  <div class="p-head cnt">
+    <div class="eyebrow rv">Интерфейс экосистемы</div>
+    <h2 class="sh rv d1">Архитектура решений <span class="or">UPSTATE</span></h2>
+    <p class="ss rv d2">Карусель модулей платформы движется непрерывно. Наведите курсор на центральную карточку — раскроются экраны и детальное описание.</p>
+  </div>
+
+  <div class="belt-outer">
+    <div class="belt-track" id="BELT-TRACK"></div>
+  </div>
+
+  <div class="belt-dots" id="BELT-DOTS"></div>
+</section>
+
+<section id="BENTO" class="sec">
+  <div class="cnt">
+    <div class="eyebrow rv">Инфраструктура</div>
+    <h2 class="sh rv d1">Технологии клиентского опыта</h2>
+    <p class="ss rv d2">Мы упаковали разрозненные инструменты фитнес-маркетинга в бесшовную технологическую CRM-панель.</p>
+    
+    <div class="b-grid">
+
+      <div class="mc mc-m1 rv">
+        <div class="mc-info">
+          <div class="focus-badge rv">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#00d8cc" stroke-width="1.5"/><circle cx="6" cy="6" r="2" fill="#00d8cc"/></svg>
+            Сегодня на связи: 18 &nbsp;·&nbsp; Внимание: 3
+          </div>
+          <h3 style="margin-top:14px;">Главный пульт<br>тренера</h3>
+          <p>ИИ собирает ежедневный хаос в одну картину. Один экран вместо 20 чатов — чёткий статус каждого подопечного прямо сейчас.</p>
+        </div>
+        <div class="mc-visual">
+          <div class="orb orb-tl"></div>
+          <div class="orb orb-or" style="right:auto; left:-30px; bottom: 40%; width:120px; height:120px; opacity:0.6;"></div>
+        </div>
+        <div class="client-feed">
+          <div class="c-row">
+            <span class="c-dot c-dot-g"></span>
+            <span class="c-name">Лина К.</span>
+            <span class="c-status">Отчёт по питанию ✓ ИИ КБЖУ</span>
+          </div>
+          <div class="c-row">
+            <span class="c-dot c-dot-o"></span>
+            <span class="c-name">Артур М.</span>
+            <span class="c-status">Пропуск — авто-опрос отправлен</span>
+          </div>
+          <div class="c-row">
+            <span class="c-dot c-dot-r"></span>
+            <span class="c-name">Игорь Д.</span>
+            <span class="c-status">Пульс +12% — рекомендован отдых</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mc mc-m2 rv d1">
+        <div class="mc-info">
+          <h3>Здоровье и привычки</h3>
+          <p>Платформа работает как консилиум в кармане. Анализирует цифровой след подопечного и выдаёт готовые подсказки — без таблиц и калькулятора.</p>
+        </div>
+        <div class="mc-visual">
+          <div class="orb orb-both"></div>
+        </div>
+        <div class="trigger-stack">
+          <div class="t-card">
+            <div class="t-flag t-flag-r">⬤ &nbsp;КРИТИЧНО — MAV</div>
+            <div class="t-desc">Все группы мышц в зоне MAV (18+ подходов). Риск перетренированности — рекомендована разгрузочная неделя.</div>
+          </div>
+          <div class="t-card">
+            <div class="t-flag t-flag-y">⬤ &nbsp;ВНИМАНИЕ — Питание 62%</div>
+            <div class="t-desc">Клиент пропускает обед 3–4 раза в неделю. Требует корректировки плана.</div>
+          </div>
+          <div class="t-card">
+            <div class="t-flag t-flag-g">⬤ &nbsp;ОТЛИЧНО — БАДы 91%</div>
+            <div class="t-desc">Соблюдение режима: 91%. ИИ рекомендует похвалу.</div>
+            <span class="t-btn">Отправить похвалу →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mc mc-m3 rv d2">
+        <div class="mc-info">
+          <h3>Умный конструктор</h3>
+          <p>Упакуйте экспертизу один раз — ИИ множит ваше время. Кастомные программы питания и тренировок генерируются за секунды.</p>
+        </div>
+        <div class="mc-visual">
+          <div class="orb orb-or" style="opacity:0.7;"></div>
+        </div>
+        <div class="layer-icons">
+          <div class="l-icon"></div>
+          <div class="l-icon"></div>
+          <div class="l-icon"></div>
+        </div>
+        <div class="ai-btn-float">✦ &nbsp;Сгенерировать с AI</div>
+      </div>
+
+      <div class="mc mc-m4 rv d3">
+        <div class="mc-info">
+          <h3>Retention Radar</h3>
+          <p>Фитнес-RPG для подопечных и контроль лояльности для вас. Система сама мотивирует — вам только следить за индексами.</p>
+        </div>
+        <div class="mc-visual">
+          <div class="orb orb-tl" style="opacity:0.7; width:120px; height:120px;"></div>
+        </div>
+        <div class="push-stack">
+          <div class="push-card">
+            <span class="push-icon">🔔</span>
+            <div class="push-text">
+              <b>9:41 — Авто-пуш</b>
+              Пройди сегодня лишнюю карточку и закрой день с пользой
+            </div>
+          </div>
+          <div class="push-card">
+            <span class="push-icon">🥗</span>
+            <div class="push-text">
+              <b>12:00 — Напоминание</b>
+              Не пропусти приём еды по плану
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="CALC" class="sec">
+  <div class="cnt">
+    <div class="eyebrow rv">Экономика масштаба</div>
+    <h2 class="sh rv d1">Посчитайте чистую бизнес-модель</h2>
+    <p class="ss rv d2">Узнайте, сколько времени освободит UPSTATE и как изменится ваша ежемесячная прибыль при оптимизации метрики Retention.</p>
+    
+    <div class="c-box rv d3">
+      <div class="c-inputs">
+        <div class="r-group">
+          <div class="r-meta">
+            <label for="S1R">Текущее число активных клиентов</label>
+            <div class="r-val" id="VAL1">15</div>
+          </div>
+          <input type="range" id="S1R" class="slider" min="5" max="60" value="15">
+        </div>
+        
+        <div class="r-group">
+          <div class="r-meta">
+            <label for="S2R">Стоимость вашего ведения / мес</label>
+            <div class="r-val" id="VAL2">10 000</div>
+          </div>
+          <input type="range" id="S2R" class="slider" min="3000" max="40000" step="500" value="10000">
+        </div>
+        
+        <div class="r-group">
+          <div class="r-meta">
+            <label for="S3R">Средний ежемесячный Retention</label>
+            <div class="r-val r-val-tl" id="VAL3">80%</div>
+          </div>
+          <input type="range" id="S3R" class="slider slider-tl" min="50" max="95" value="80">
+        </div>
+      </div>
+      
+      <div class="c-outputs">
+        <div class="o-glow"></div>
+        <div class="o-primary">
+          <div class="o-lbl">Потенциальный доход с UPSTATE</div>
+          <div class="o-num-huge" id="RES-TOTAL">150 000 <span class="ct-rub">₽/мес</span></div>
+        </div>
+        
+        <div class="o-sub-grid">
+          <div>
+            <div class="o-lbl">Высвобождено времени</div>
+            <div class="o-sub-num tl" id="RES-HOURS">31 ч</div>
+            <div style="font-size:11px; color:var(--txt2);">в месяц</div>
+          </div>
+          <div>
+            <div class="o-lbl">Рост LTV на подопечного</div>
+            <div class="o-sub-num" id="RES-LTV">+18.5%</div>
+            <div style="font-size:11px; color:var(--txt2);">за счет комплаенса</div>
+          </div>
+          <div>
+            <div class="o-lbl">Чистая разница прибыли</div>
+            <div class="o-sub-num or" id="RES-DIFF">+32 000 ₽</div>
+            <div style="font-size:11px; color:var(--txt2);">Дополнительно</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="CTA" class="sec">
+  <canvas id="FIN-CVS" class="cvs-layer"></canvas>
+  <div class="cnt">
+    <div class="cta-box">
+      <div class="eyebrow rv">ЗАКРЫТЫЙ НАБОР В BETA-ТЕСТ</div>
+      <h2 class="sh rv d1">Перейдите на infrastructure <span class="or">UPSTATE</span></h2>
+      <p class="ss rv d2">Прекратите тратить драгоценную энергию на хаотичное ручное администрирование таблиц. Автоматизируйте процессы и станьте премиальным институтом фитнеса для своих клиентов.</p>
+      <div class="rv d3">
+        <a href="https://t.me/Upstate_Ecosystem" target="_blank" class="btn-p" style="padding:20px 48px; font-size:16px;">Подать заявку на инвайт</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="cnt">
+    <div class="f-grid">
+      <div class="f-brand">
+        <h4>UPSTATE<span></span></h4>
+        <p>B2B SaaS-инфраструктура нового поколения для независимых фитнес-инструкторов, нутрициологов и спортивных экспертов.</p>
+      </div>
+      <div class="f-group">
+        <div class="f-group-h">Экосистема</div>
+        <a href="#S3">Архитектура решений</a>
+        <a href="#BENTO">Possibilities платформы</a>
+        <a href="#CALC">Калькулятор ROI</a>
+      </div>
+      <div class="f-group">
+        <div class="f-group-h">Связь с командой</div>
+        <a href="https://t.me/Upstate_Ecosystem" target="_blank" style="color: var(--or); font-weight: 600;">Telegram: @Upstate_Ecosystem</a>
+        <a href="mailto:team.upstate.system@gmail.com">Email: team.upstate.system@gmail.com</a>
+      </div>
+      <div class="f-group">
+        <div class="f-group-h">Конфиденциальность</div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <div>© 2026 UPSTATE Ecosystem. All rights reserved. Hardware Acceleration Active.</div>
+      <div>Разработано в рамках глобальных стандартов фитнес-аналитики</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const cur = document.getElementById('CUR');
+  const curR = document.getElementById('CUR-R');
+  let cx = 0, cy = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+    if (cur) { cur.style.left = `${tx}px`; cur.style.top = `${ty}px`; }
+  });
+
+  function animCursor() {
+    cx += (tx - cx) * 0.14; cy += (ty - cy) * 0.14;
+    if (curR) { curR.style.left = `${cx}px`; curR.style.top = `${cy}px`; }
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  function initNetCanvas(id) {
+    const cvs = document.getElementById(id);
+    if (!cvs) return;
+    const ctx = cvs.getContext('2d');
+    let pts = []; let w, h; let m = { x: null, y: null };
+
+    function resize() {
+      const r = cvs.parentElement.getBoundingClientRect();
+      w = cvs.width = r.width; h = cvs.height = r.height;
+      pts = [];
+      const cnt = Math.min(60, Math.floor((w * h) / 18000));
+      for (let i = 0; i < cnt; i++) {
+        pts.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+          r: Math.random() * 1.5 + 1
+        });
+      }
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    cvs.parentElement.addEventListener('mousemove', (e) => {
+      const r = cvs.getBoundingClientRect();
+      m.x = e.clientX - r.left; m.y = e.clientY - r.top;
+    });
+    cvs.parentElement.addEventListener('mouseleave', () => { m.x = null; m.y = null; });
+
+    function loop() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(0, 216, 204, 0.25)';
+      ctx.strokeStyle = 'rgba(0, 216, 204, 0.04)';
+
+      for (let i = 0; i < pts.length; i++) {
+        let p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+
+        if (m.x !== null) {
+          let dx = m.x - p.x; let dy = m.y - p.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130) {
+            ctx.strokeStyle = `rgba(255, 77, 0, ${0.12 * (1 - dist / 130)})`;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(m.x, m.y); ctx.stroke();
+          }
+        }
+        for (let j = i + 1; j < pts.length; j++) {
+          let p2 = pts[j];
+          let dx = p.x - p2.x; let dy = p.y - p2.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.strokeStyle = `rgba(0, 216, 204, ${0.06 * (1 - dist / 100)})`;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+  initNetCanvas('NET-CVS');
+  initNetCanvas('FIN-CVS');
+
+  (function initIntro() {
+    const intro   = document.getElementById('INTRO');
+    const video   = document.getElementById('INTRO-VIDEO');
+    const wrap    = document.getElementById('INTRO-WRAP');
+    const skip    = document.getElementById('INTRO-SKIP');
+
+    if (!intro || !video) return;
+
+    function endIntro() {
+      if (intro.dataset.done) return;
+      intro.dataset.done = '1';
+
+      const navLogo  = document.getElementById('NAV-LOGO');
+      const wrapRect = wrap.getBoundingClientRect();
+      const navRect  = navLogo.getBoundingClientRect();
+      const dx    = (navRect.left + navRect.width  / 2) - (wrapRect.left + wrapRect.width  / 2);
+      const dy    = (navRect.top  + navRect.height / 2) - (wrapRect.top  + wrapRect.height / 2);
+      const scale = Math.max(navRect.height / wrapRect.height, 0.04);
+
+      wrap.style.transition = 'transform 0.85s cubic-bezier(0.4,0,0.2,1), opacity 0.5s 0.35s';
+      wrap.style.transform  = `translate(${dx}px,${dy}px) scale(${scale})`;
+      wrap.style.opacity    = '0';
+      intro.classList.add('intro-exit');
+
+      setTimeout(() => {
+        intro.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 950);
+    }
+
+    video.addEventListener('canplay', () => {
+      intro.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      video.play().catch(() => endIntro());
+    }, { once: true });
+
+    video.addEventListener('error', () => endIntro());
+    video.addEventListener('ended', endIntro);
+    if (skip) skip.addEventListener('click', endIntro);
+    setTimeout(endIntro, 9000);
+    video.load();
+  })();
+
+  const pains = [
+    { no:"01", tag:"Питание",       question:"Как избавить тренера от ручной проверки рационов и КБЖУ?",         answer:"Интеграция с FatSecret позволяет автоматически выкачивать подробные логи питания подопечного прямо в таймлайн CRM-панели без хаотичных скриншотов.",                    screens:["screen1_1.png"] },
+    { no:"02", tag:"Тренинг",        question:"Как детально контролировать технику и прогресс в упражнениях?",    answer:"Вы получаете видеоразборы подходов клиента, интерактивные логи рабочих весов и мониторинг шкалы утомления RPE в рамках единого цифрового дня.",                      screens:["screen2_1.png","screen2_2.png","screen2_3.png"] },
+    { no:"03", tag:"Аналитика",      question:"Как своевременно заметить плато или риски перетренированности?",   answer:"Встроенный алгоритм сопоставляет динамику веса тела, шаг нагрузок и субъективные маркеры восстановления, строя прогнозную аналитику состояния.",               screens:["screen3_1.png","screen3_2.png"] },
+    { no:"04", tag:"Коммуникация",   question:"Как навести порядок и избавиться от бесконечного флуда в Telegram?",answer:"Сообщения автоматически фильтруются по контекстным тегам (отчеты, вопросы, медиа формы), а важные заметки закрепляются поверх истории чата.",                   screens:["screen4_1.png","screen4_2.png","screen4_3.png"] },
+    { no:"05", tag:"Автоматизация",  question:"Как тратить меньше времени на регулярный сбор отчетов?",           answer:"ИИ-ассистент самостоятельно напоминает клиенту, собирает ключевые метрики в мессенджере и структурирует их до начала вашей рабочей смены.",                      screens:["screen5_1.png"] },
+    { no:"06", tag:"Мотивация",      question:"Как наглядно доказать клиенту ценность вашей работы?",             answer:"Инструменты визуализации очищают случайные колебания веса и показывают чистые тренды роста силы и улучшения состава тела на графиках.",                       screens:["screen6_1.png"] },
+    { no:"07", tag:"Удержание (LTV)",question:"Как предотвратить неожиданный уход и потерю клиентов?",             answer:"Интегрированный скоринг вовлеченности подсвечивает «угасающих» подопечных за 4 дня до потери мотивации, запуская автоматические триггеры поддержки.",         screens:["screen7_1.png","screen7_2.png","screen7_3.png"] },
+    { no:"08", tag:"База знаний",    question:"Как структурировать обучающие материалы для подопечных?",           answer:"Создавайте защищенную библиотеку авторских лекций, прикрепляйте гайды к дням календаря и проверяйте усвоение знаний через встроенные тесты.",                    screens:["screen8_1.png","screen8_2.png","screen8_3.png"] },
+    { no:"09", tag:"Конструктор",    question:"Как ускорить написание индивидуальных программ тренировок?",        answer:"Платформа поддерживает импорт планов из обычного текста, автокопирование готовых макроциклов и мгновенное масштабирование блоков на группы.",                    screens:["screen9_1.png","screen9_2.png","screen9_3.png"] },
+    { no:"10", tag:"Бизнес",         question:"Как контролировать финансовые потоки от фитнес-бизнеса?",           answer:"Сквозная финансовая аналитика ведет полный учет чистой прибыли, автоматизирует рекуррентные подписки и строит карту вашего масштабирования.",                   screens:["screen10_1.png"] },
+  ];
+
+  const beltTrack = document.getElementById('BELT-TRACK');
+  const beltDots  = document.getElementById('BELT-DOTS');
+  const s3Section = document.getElementById('S3');
+
+  if (beltTrack) {
+    function buildCards() {
+      beltTrack.innerHTML = '';
+      [...pains, ...pains, ...pains].forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'pc';
+        card.dataset.idx = i % pains.length;
+
+        let screensHtml = '';
+        p.screens.forEach((src, idx) => {
+          screensHtml += `<img src="${src}" alt="" class="deck-screen" data-layer="${idx}">`;
+        });
+
+        card.innerHTML = `
+          <div class="pc-meta">
+            <div class="pc-no">Модуль ${p.no}</div>
+            <div class="pc-tag">${p.tag}</div>
+          </div>
+          <div class="pc-question">${p.question}</div>
+          <div class="pc-screen-container">
+            <div class="pc-deck">${screensHtml}</div>
+          </div>
+          <div class="pc-answer">${p.answer}</div>
+        `;
+        beltTrack.appendChild(card);
+      });
+    }
+    buildCards();
+
+    pains.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'bdot' + (i === 0 ? ' on' : '');
+      d.dataset.i = i;
+      beltDots.appendChild(d);
+    });
+    const dots = beltDots.querySelectorAll('.bdot');
+
+    let beltPos    = 0;
+    let beltPaused = false;
+    const SPEED    = 2.2;
+    let singleW    = 0;
+
+    function measureSingleWidth() {
+      const cards = beltTrack.querySelectorAll('.pc');
+      let w = 0;
+      const n = pains.length;
+      for (let i = 0; i < n; i++) {
+        const r = cards[i].getBoundingClientRect();
+        w += r.width + 24;
+      }
+      singleW = w;
+    }
+
+    requestAnimationFrame(() => requestAnimationFrame(measureSingleWidth));
+
+    let activeCard = null;
+
+    function updateActive() {
+      if (beltPaused) return;
+      const cards = beltTrack.querySelectorAll('.pc');
+      const cx    = window.innerWidth / 2;
+      let best = null, bestD = Infinity;
+
+      cards.forEach(card => {
+        const r = card.getBoundingClientRect();
+        const d = Math.abs((r.left + r.width / 2) - cx);
+        if (d < bestD) { bestD = d; best = card; }
+      });
+
+      if (best !== activeCard) {
+        if (activeCard) activeCard.classList.remove('act');
+        if (best && bestD < 350) {
+          best.classList.add('act');
+          activeCard = best;
+          const idx = parseInt(best.dataset.idx);
+          dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+        } else {
+          activeCard = null;
+        }
+      }
+    }
+
+    function beltTick() {
+      if (!beltPaused && singleW > 0) {
+        beltPos -= SPEED;
+        if (Math.abs(beltPos) >= singleW) beltPos += singleW;
+        beltTrack.style.transform = `translateX(${beltPos}px)`;
+      }
+      updateActive();
+      requestAnimationFrame(beltTick);
+    }
+    beltTick();
+
+    beltTrack.addEventListener('mouseenter', e => {
+      const card = e.target.closest('.pc');
+      if (!card || !card.classList.contains('act') || card.classList.contains('hovered')) return;
+
+      beltPaused = true;
+
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const screenCenter = window.innerWidth / 2;
+      const offsetToCenter = screenCenter - cardCenter;
+
+      card.style.transform = `translateX(${offsetToCenter}px)`;
+      card.classList.add('hovered');
+      s3Section.classList.add('stage-blurred');
+
+      const screens = card.querySelectorAll('.deck-screen');
+      const count = screens.length;
+      if (count === 0) return;
+      const cardW = 1100; 
+      const sw = 190, pad = 64;
+      const avail = cardW - pad;
+      const gap = (avail - count * sw) / (count + 1);
+      screens.forEach((s, i) => {
+        s.style.left = `${gap + i * (sw + gap)}px`;
+      });
+    }, true);
+
+    beltTrack.addEventListener('mouseleave', e => {
+      const card = e.target.closest('.pc');
+      if (!card || !card.classList.contains('hovered')) return;
+
+      card.classList.remove('hovered');
+      s3Section.classList.remove('stage-blurred');
+      card.style.transform = '';
+
+      const screens = card.querySelectorAll('.deck-screen');
+      screens.forEach(s => s.style.left = '');
+
+      beltPaused = false;
+    }, true);
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx   = parseInt(dot.dataset.i);
+        const cards = beltTrack.querySelectorAll('.pc');
+        const cx    = window.innerWidth / 2;
+        for (const card of cards) {
+          if (parseInt(card.dataset.idx) === idx) {
+            const r  = card.getBoundingClientRect();
+            beltPos -= (r.left + r.width / 2) - cx;
+            beltTrack.style.transform = `translateX(${beltPos}px)`;
+            break;
+          }
+        }
+      });
+    });
+  }
+
+  const s1 = document.getElementById('S1R'); const s2 = document.getElementById('S2R'); const s3 = document.getElementById('S3R');
+  const v1 = document.getElementById('VAL1'); const v2 = document.getElementById('VAL2'); const v3 = document.getElementById('VAL3');
+  const rHours = document.getElementById('RES-HOURS'); const rLtv = document.getElementById('RES-LTV');
+  const rTotal = document.getElementById('RES-TOTAL'); const rDiff = document.getElementById('RES-DIFF');
+
+  function updateCalc() {
+    if (!s1 || !s2 || !s3) return;
+    const clients = parseInt(s1.value); const price = parseInt(s2.value); const retention = parseInt(s3.value) / 100;
+    if (v1) v1.textContent = clients;
+    if (v2) v2.textContent = price.toLocaleString('ru-RU');
+    if (v3) v3.textContent = `${Math.round(retention * 100)}%`;
+
+    const hoursSaved = Math.round(clients * 2.1);
+    if (rHours) rHours.textContent = `${hoursSaved} ч`;
+
+    const upstateRetention = Math.min(0.98, retention + 0.14);
+    const ltvBoostPercent = ((upstateRetention / (1 - upstateRetention)) / (retention / (1 - retention)) - 1) * 100;
+    if (rLtv) rLtv.textContent = `+${Math.max(5, Math.min(45, ltvBoostPercent)).toFixed(1)}%`;
+
+    const oldRev = clients * price;
+    const newRev = Math.round(oldRev * (1 + (0.12 * (1 - retention))));
+    const diff = newRev - oldRev;
+
+    if (rTotal) {
+      rTotal.innerHTML = `${newRev.toLocaleString('ru-RU')} <span class="ct-rub">₽/мес</span>`;
+    }
+    if (rDiff) rDiff.textContent = `+${diff.toLocaleString('ru-RU')} ₽`;
+  }
+  [s1, s2, s3].forEach(s => s?.addEventListener('input', updateCalc));
+  updateCalc();
+
+  const bentoCards = document.querySelectorAll('.mc');
+  bentoCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      const dy = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+      const orb = card.querySelector('.orb'); const stack = card.querySelector('.trigger-stack');
+      if (orb) orb.style.transform = `translate(${dx * 18}px, ${dy * 14}px)`;
+      if (stack) stack.style.transform = `translateX(${dx * -8}px) translateY(${dy * -6}px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      const orb = card.querySelector('.orb'); const stack = card.querySelector('.trigger-stack');
+      if (orb) orb.style.transform = ''; if (stack) stack.style.transform = '';
+    });
+  });
+
+  let spots = 139;
+  setInterval(() => {
+    if (spots > 98 && Math.random() < 0.15) {
+      spots = Math.max(98, spots - 1);
+      const el = document.getElementById('SPOTS'); if (el) el.textContent = spots;
+    }
+  }, 12000);
+
+  const revealElements = document.querySelectorAll('.rv');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('vis'); obs.unobserve(entry.target); }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+  revealElements.forEach(el => obs.observe(el));
+});
+</script>
+</body>
+</html>
